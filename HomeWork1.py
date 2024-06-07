@@ -21,4 +21,4 @@ house1.print_info()
 house2.print_info()
 new_floor = input("введите номер этажа: ")
 
-(house1.go_to(new_floor))
+house1.go_to(new_floor)
