@@ -1,3 +1,6 @@
+import time
+
+
 class User:
     """
     класс Пользователь, содержит атрибуты: Имя, пароль, возраст
@@ -87,7 +90,12 @@ class UrTube:
                     if int(ur.current_user.age) < 18:
                         print("Вам нет 18 лет, пожалуйста покиньте страницу")
                     else:
-                        print("Запускаем просмотр: ....")
+                        print(f"Запускаем просмотр фильма: {i.title}")
+                        for i in range(int(i.duration)):
+                            time.sleep(1)
+                            print(i+1)
+                        print("---!!!Конец видео!!!---")
+
 
 
 
@@ -101,19 +109,19 @@ U1.append(users)
 U2 = User("Макс", "234", "15")
 U2.append(users)
 
-V1 = Video("Лучший язык програмирования 2024 года", 200)
+V1 = Video("Лучший язык програмирования 2024 года", 30)
 V2 = Video("Для чего девушкам парень программист?",10)
-V3 = Video("Матрица", 150)
-V4 = Video("XXX", 100)
+V3 = Video("Матрица", 15)
+V4 = Video("XXX", 20)
 V4.adult_mode = True
 V2.adult_mode = True
-ur.add_video(V1, V2,V3)
+ur.add_video(V1, V2)
 
 if __name__ == "__main__":
     print('Добро пожаловать на платформу "Свой YouTube"!!! ')
-    print(f"текущий список пользователей: ")
+    print(f"---текущий список пользователей: ---")
     U1.print(users)
-    print(f"Текущий список видео: ")
+    print(f"---Текущий список видео: ---")
     ur.print_videos(videos)
     while True:
         choice = int(input("Выберите действие: \n1 - Войти в учетную запись \n2 - Зарегистрироваться\n"
@@ -121,7 +129,7 @@ if __name__ == "__main__":
         if choice == 1:  #  -  попытка входа в учетную запить
             print(nickname1 := input("Введите Имя: "), password1 := input("Введите пароль: "))
             if ur.log_in(nickname1, password1) == True:
-                print("Текущий пользователь: !!!___", ur.current_user.nickname,"___!!!")
+                print("---Текущий пользователь: ___", ur.current_user.nickname,"___!!!---")
                 while ur.current_user != None:
                     choice2 = int(input("Выбери, что нужно сделать: \n1 - добавить новый фильм в список \n2 "
                                        "- найти фильм по названию (для просмотра) \n3 - Найти фильмы по фрагменту "
@@ -131,10 +139,9 @@ if __name__ == "__main__":
                         print(f"Текущий список видео: ")
                         ur.print_videos(videos)
                     elif choice2 == 2:
-                        ur.watch_video(name_film=input("введите точное название фильма для просмотра: "))
+                        ur.watch_video(input("введите точное название фильма для просмотра: "))
                     elif choice2 == 3:
-                        print(_find := input("Напишите, какой бы фильм вы хотели найти? "))
-                        ur.get_videos(_find)
+                        ur.get_videos(input("Напишите фрагмент названия для поиска подходящих фильмов в нашем списке:"))
                     elif choice2 == 4:
                         ur.log_out()
                     else:
@@ -146,7 +153,7 @@ if __name__ == "__main__":
             ur.register(user.nickname, user.password, user.age)
             print("текущий список пользователей:")
             U1.print(users)
-            print("Текущий пользователь: !!!___", ur.current_user.nickname,"___!!!")
+            print("---Текущий пользователь: !!!___", ur.current_user.nickname,"___!!!---")
             while ur.current_user != None:
                 choice2 = int(input("Выбери, что нужно сделать: \n1 - добавить новый фильм в список \n2 "
                                        "- найти фильм по названию (для просмотра) \n3 - Найти фильмы по фрагменту "
@@ -158,15 +165,13 @@ if __name__ == "__main__":
                 elif choice2 == 2:
                     ur.watch_video(name_film=input("введите точное название фильма для просмотра: "))
                 elif choice2 == 3:
-                    print(_find := input("Напишите фрагмент названия для поиска подходящих фильмов в нашем списке: "))
-                    ur.get_videos(_find)
+                    ur.get_videos(input("Напишите фрагмент названия для поиска подходящих фильмов в нашем списке: "))
                 elif choice2 == 4:
                     ur.log_out()
                 else:
                     exit()
         elif choice == 3:
-            print(_find := input("Напишите фрагмент названия для поиска подходящих фильмов в нашем списке: "))
-            ur.get_videos(_find)
+            ur.get_videos(input("Напишите фрагмент названия для поиска подходящих фильмов в нашем списке: "))
         elif choice == 4:
             print("До новых встреч!!!")
             exit()
