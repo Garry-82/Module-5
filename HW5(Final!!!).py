@@ -156,7 +156,7 @@ if __name__ == "__main__":
             user = User(input("Введите Имя: "), input("Введите пароль: "), input("введите ваш возраст: "))
             ur.register(user.nickname, user.password, user.age)
             print("текущий список пользователей:")
-            U1.print(users)
+            ur.print_users(users)
             print("---Текущий пользователь: !!!___", ur.current_user.nickname,"___!!!---")
             while ur.current_user != None:
                 choice2 = int(input("Выбери, что нужно сделать: \n1 - добавить новый фильм в список \n2 "
