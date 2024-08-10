@@ -52,18 +52,18 @@ class UrTube:
     def log_out(self):  #  -  выход из текущей учетной записи
         UrTube.current_user = None
 
-    def print_users(self, users): # - вывод информации о пользователях, в виде списка, на экран!
+    def print_users(self): # - вывод информации о пользователях, в виде списка, на экран!
         str1 = []
-        for i in users:
+        for i in self.users:
             str1.append({i.nickname: [i.password, i.age]})
-        print(str1)
+        print(*str1)
 
-    def print_videos(self, users):  # - вывод информации о видео, в виде списка, на экран!
+    def print_videos(self):  # - вывод информации о видео, в виде списка, на экран!
         str2 = []
-        for i in videos:
+        for i in self.videos:
             str2.append({i.title: i.duration})
-        print(str2)
-    def add_video(self, *Video):  #  -  добавление нового видео в список
+        print(*str2)
+    def add_video(self, *Video):  #  -  добавление новых видео в список
         for j in Video:
             for i in range(len(self.videos)):
                 if j.title in self.videos[i].title:
@@ -105,43 +105,48 @@ class UrTube:
 
 videos = []  # - список объектов видео
 users = []  # - список объектов пользователей
-ur = UrTube(users, videos)
+
 
 U1 = User("Игорь", "1234", "35")
 users.append(U1)
 U2 = User("Макс", "234", "15")
 users.append(U2)
 
+ur = UrTube(users, videos)
 V1 = Video("Лучший язык програмирования 2024 года", 30)
 V2 = Video("Для чего девушкам парень программист?",10)
 V3 = Video("Матрица", 15)
 V4 = Video("XXX", 20)
+V5 = Video("Для чего девушкам парень программист?",40)
 V4.adult_mode = True
 V2.adult_mode = True
-ur.add_video(V1, V2)
+videos.append(V1)
+videos.append(V2)
 
 if __name__ == "__main__":
     print('Добро пожаловать на платформу "Свой YouTube"!!! ')
     print(f"---текущий список пользователей: ---")
 #    U1.print(users)
-    ur.print_users(users)
+    ur.print_users()
     print(f"---Текущий список видео: ---")
-    ur.print_videos(videos)
+    ur.print_videos()
     while True:
-        choice = int(input("Выберите действие: \n1 - Войти в учетную запись \n2 - Зарегистрироваться\n"
-                           "3 - Найти фильмы по фрагменту названия \n4 - выйти из приложения\n"))
+        print("\n-------------- ГЛАВНОЕ МЕНЮ -------------------- \n1 - Войти в учетную запись \n2 - Зарегистрироваться\n"
+                           "3 - Найти фильмы по фрагменту названия \n4 - выйти из приложения")
+        choice = int(input("Введите номер действия: "))
         if choice == 1:  #  -  попытка входа в учетную запить
             print(nickname1 := input("Введите Имя: "), password1 := input("Введите пароль: "))
             if ur.log_in(nickname1, password1) == True:
-                print("---Текущий пользователь: ___", ur.current_user.nickname,"___!!!---")
+                print("\n---Текущий пользователь: ___", ur.current_user.nickname,"___!!!---")
                 while ur.current_user != None:
-                    choice2 = int(input("Выбери, что нужно сделать: \n1 - добавить новый фильм в список \n2 "
+                    print("\n1 - добавить новый фильм в список \n2 "
                                        "- найти фильм по названию (для просмотра) \n3 - Найти фильмы по фрагменту "
-                                        "названия\n4 - Выйти из текущего аккаунта\n5 - выйти из приложения\n"))
+                                        "названия\n4 - Выйти из текущего аккаунта\n5 - выйти из приложения\n")
+                    choice2 = int(input("Выбери, что нужно сделать: "))
                     if choice2 == 1:
-                        ur.add_video(V4)
+                        ur.add_video(V3, V4, V5)
                         print(f"Текущий список видео: ")
-                        ur.print_videos(videos)
+                        ur.print_videos()
                     elif choice2 == 2:
                         ur.watch_video(input("введите точное название фильма для просмотра: "))
                     elif choice2 == 3:
@@ -156,16 +161,17 @@ if __name__ == "__main__":
             user = User(input("Введите Имя: "), input("Введите пароль: "), input("введите ваш возраст: "))
             ur.register(user.nickname, user.password, user.age)
             print("текущий список пользователей:")
-            ur.print_users(users)
-            print("---Текущий пользователь: !!!___", ur.current_user.nickname,"___!!!---")
+            ur.print_users()
+            print("\n---Текущий пользователь: !!!___", ur.current_user.nickname,"___!!!---")
             while ur.current_user != None:
-                choice2 = int(input("Выбери, что нужно сделать: \n1 - добавить новый фильм в список \n2 "
+                print("1 - добавить новый фильм в список \n2 "
                                        "- найти фильм по названию (для просмотра) \n3 - Найти фильмы по фрагменту "
-                                        "названия\n4 - Выйти из текущего аккаунта\n5 - выйти из приложения\n"))
+                                        "названия\n4 - Выйти из текущего аккаунта\n5 - выйти из приложения")
+                choice2 = int(input("Выбери, что нужно сделать: "))
                 if choice2 == 1:
-                    ur.add_video(V3)
+                    ur.add_video(V3, V4, V5)
                     print("Текущий список видео: ")
-                    ur.print_videos(videos)
+                    ur.print_videos()
                 elif choice2 == 2:
                     ur.watch_video(name_film=input("введите точное название фильма для просмотра: "))
                 elif choice2 == 3:
