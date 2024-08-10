@@ -1,6 +1,5 @@
 import time
 
-
 class User:
     """
     класс Пользователь, содержит атрибуты: Имя, пароль, возраст
@@ -9,9 +8,7 @@ class User:
         self.nickname = nickname
         self. password = password
         self.age = age
-    def append(self, users):
-        U = User(self.nickname, self.password, self.age)
-        users.append(U)
+
     def print(self, users): # - метод для вывода информации о пользователях, в виде списка, на экран!
         str1 = []
         for i in users:
@@ -31,7 +28,7 @@ class UrTube:
     def __init__(self, users, videos):
         self.users = users
         self.videos = videos
-    def log_in(self, login, password):
+    def log_in(self, login, password):  #  -  вход в учетную запись
 
         for i in range(len(self.users)):
             if login not in self.users[i].nickname:
@@ -41,26 +38,32 @@ class UrTube:
                     UrTube.current_user = self.users[i]
                     return True  # - полное совпадение по имени и паролю!!!
 
-    def register(self, nickname, password, age):
+    def register(self, nickname, password, age):  #  -  регистрация нового пользователя
         while True:
             for i in range(len(self.users)):
                 if nickname in self.users[i].nickname:
                     print(f"Имя пользователя __{nickname}__ уже занято!!!")
                     return False
             U = User(nickname, password, age)
-            U.append(users)
+            users.append(U)
             UrTube.current_user = self.users[i+1]
             print("!!! Добавляем нового пользователя!!!")
             return
-    def log_out(self):
+    def log_out(self):  #  -  выход из текущей учетной записи
         UrTube.current_user = None
 
-    def print_videos(self, users):  # - метод для вывода информации о видео, в виде списка, на экран!
+    def print_users(self, users): # - вывод информации о пользователях, в виде списка, на экран!
+        str1 = []
+        for i in users:
+            str1.append({i.nickname: [i.password, i.age]})
+        print(str1)
+
+    def print_videos(self, users):  # - вывод информации о видео, в виде списка, на экран!
         str2 = []
         for i in videos:
             str2.append({i.title: i.duration})
         print(str2)
-    def add_video(self, *Video):
+    def add_video(self, *Video):  #  -  добавление нового видео в список
         for j in Video:
             for i in range(len(self.videos)):
                 if j.title in self.videos[i].title:
@@ -68,7 +71,7 @@ class UrTube:
                     return
             videos.append(j)
 
-    def get_videos(self, find_name):
+    def get_videos(self, find_name):  #  - поиск всех видео по заданным фрагментам
         j = 0  # - счетчик совпадений фрагмента в названиях фильмов
         find_videos = []  # - список всех видео, где содержится искомый фрагмент текста
         while True:
@@ -81,7 +84,7 @@ class UrTube:
             else:
                 print(f"список фильмов, где встречается искомый фрагмент: \n{find_videos}")
             return
-    def watch_video(self, name_film):
+    def watch_video(self, name_film):  #  -  поиск нужного фильма для просмотра
         for i in videos:
             if name_film.upper() in i.title.upper():
                 if ur.current_user == None:
@@ -105,9 +108,9 @@ users = []  # - список объектов пользователей
 ur = UrTube(users, videos)
 
 U1 = User("Игорь", "1234", "35")
-U1.append(users)
+users.append(U1)
 U2 = User("Макс", "234", "15")
-U2.append(users)
+users.append(U2)
 
 V1 = Video("Лучший язык програмирования 2024 года", 30)
 V2 = Video("Для чего девушкам парень программист?",10)
@@ -120,7 +123,8 @@ ur.add_video(V1, V2)
 if __name__ == "__main__":
     print('Добро пожаловать на платформу "Свой YouTube"!!! ')
     print(f"---текущий список пользователей: ---")
-    U1.print(users)
+#    U1.print(users)
+    ur.print_users(users)
     print(f"---Текущий список видео: ---")
     ur.print_videos(videos)
     while True:
